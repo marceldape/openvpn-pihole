@@ -8,36 +8,45 @@
 
 <br/>
 
-<p align="center">
-  <a href="https://github.com/Simonwep/openvpn-pihole/actions?query=workflow%3ACI"><img
-     alt="CI Status"
-     src="https://github.com/Simonwep/openvpn-pihole/workflows/CI/badge.svg"/></a>
-  <a href="https://github.com/sponsors/Simonwep"><img
-     alt="GitHub Sponsors"
-     src="https://img.shields.io/badge/GitHub-sponsor-0A5DFF.svg"></a>
-  <a href="https://www.buymeacoffee.com/aVc3krbXQ"><img
-     alt="Buy me a Coffee"
-     src="https://img.shields.io/badge/Buy%20Me%20A%20Coffee-donate-FF813F.svg"></a>
-  <a href="https://www.patreon.com/simonwep"><img
-     alt="Support on Patreon"
-     src="https://img.shields.io/badge/Patreon-support-FA8676.svg"></a>
-</p>
-<br>
 
 This project is a composition out of the official [PiHole docker image](https://github.com/pi-hole/docker-pi-hole) and a hand-crafted [openvpn-image](openvpn-docker) to set up a ready-to-use
 VPN with PiHole as dns-resolve in less than a minute. Its configuration is kept simple, you can add / remove clients and easily extend it as the configuration is stored in a centralized and easily manageable way.
 Enjoy!
 
-The main configuration for this is inspired by [mr-bolle/docker-openvpn-pihole](https://github.com/mr-bolle/docker-openvpn-pihole), [pknw1/openvpn-pihole-docker](https://github.com/pknw1/openvpn-pihole-docker)
-and [kylemanna/docker-openvpn](https://github.com/kylemanna/docker-openvpn).
+The main configuration for this is inspired by [Simonwep/openvpn-pihole](https://github.com/Simonwep/openvpn-pihole)
 
+### Quickstart
+ 1) Open the following server ports: `TCP/943`, `TCP/443` and `UDP/1194`
+ 2) Clone this repository 
+    ```sh
+    git clone https://github.com/marceldape/openvpn-pihole.git
+    cd openvpn-pihole
+    ```
+ 3) Change the pihole admin portal password. This is defined in [docker-compose.yml](https://github.com/marceldape/openvpn-pihole/blob/master/docker-compose.yml#L38)
+ 4) Get the public ip of the server 
+     ```sh
+    curl ifconfig.me
+    ```
+ 5) Update the IP in the client settings   [openvpn/config/client.conf](https://github.com/marceldape/openvpn-pihole/blob/master/openvpn/config/client.conf#L4)
+    
+ 6) Run the containers `docker-compose up -d`
+ 
+ 7) Create users by account:pwd
+      ```sh
+    sudo docker exec openvpn bash /opt/app/bin/genclient.sh <usr> <pwd>
+    ```
+ 8) Copy openvpn config file from remote to local
+       ```sh
+    scp -i <key>.pem -r ubuntu@<server-ip>:~/openvpn-pihole/openvpn/clients/*.ovpn .
+    ```
 
+ 
 ### Setup
 
 First clone this repository:
 
 ```sh
-git clone https://github.com/Simonwep/openvpn-pihole.git
+git clone https://github.com/marceldape/openvpn-pihole.git
 cd openvpn-pihole
 ```
 
